@@ -38,6 +38,9 @@ from langchain.agents import create_sql_agent
 from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.callbacks.base import BaseCallbackManager
 
+from azure.identity import DefaultAzureCredential
+from azure.mgmt.resource import ResourceManagementClient
+
 try:
     from .prompts import (COMBINE_QUESTION_PROMPT, COMBINE_PROMPT, COMBINE_CHAT_PROMPT,
                           CSV_PROMPT_PREFIX, CSV_PROMPT_SUFFIX, MSSQL_PROMPT, MSSQL_AGENT_PREFIX, 
@@ -311,6 +314,48 @@ def run_agent(question:str, agent_chain: AgentExecutor) -> str:
 
         response = chatgpt_chain.run(str(e))
         return response
+
+# function to verify if Semantic Search is available is Cognitive Search instance
+def semanticEnabled( searchService, azSubscription, azResourceGroup ) :
+
+    loginUrl = "https://login.microsoftonline.us/"
+    mgmtUrl = "https://management.usgovcloudapi.net/"
+    apiVersion = "2022-09-01"
+    csApiVersion = "2021-06-06-Preview"
+
+    # searchService = os.environ[ "AZURE_SEARCH_NAME" ] # update this value in env file
+    # azSubscription = os.environ[ "AZ_SUBSCRIPTION_ID" ]
+    # azResourceGroup = os.environ[ "AZ_RESOURCE_GROUP" ]
+
+    # variable to track if Semantic Search is enabled or disabled - disabled by default ( disabled = 0, enabled = 1 )
+    semanticStatus = 0
+
+    parentResourcePath = "/subscriptions/" + azSubscription
+
+    authEndpoint = loginUrl + azSubscription
+
+    # grab credential for authenticated user within notebook
+    currCredential = DefaultAzureCredential( authority = authEndpoint )
+
+    # create connection to Search Service instance via Azure Resource Manager
+    scopeurl = mgmtUrl +  ".default"
+    resourceClient = ResourceManagementClient( currCredential, azSubscription, apiVersion, mgmtUrl, credential_scopes = [ scopeurl ] )
+
+    resourceInfo = resourceClient.resources.get( azResourceGroup, "Microsoft.Search", "", "searchServices", searchService, csApiVersion )
+
+    propSemantic = resourceInfo.properties[ "semanticSearch" ]
+
+    if propSemantic == "disabled" :
+
+        semanticStatus = 0
+
+    else :
+
+        semanticStatus = 1
+
+    return semanticStatus
+
+# print( "Semantic Status: ", str( semanticStatus ) )
     
 
 ######## TOOL CLASSES #####################################
