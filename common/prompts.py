@@ -1,7 +1,7 @@
 from langchain.prompts import PromptTemplate
 
 
-COMBINE_QUESTION_PROMPT_TEMPLATE = """Use the following portion of a long document to see if any of the text is relevant to answer the question. 
+COMBINE_QUESTION_PROMPT_TEMPLATE = """Use the following portion of a long document to see if any of the text is relevant to answering the question. 
 Return any relevant text in {language}.
 {context}
 Question: {question}
@@ -24,7 +24,7 @@ QUESTION: Which state/country's law governs the interpretation of the contract?
 Content: This Agreement is governed by English law and the parties submit to the exclusive jurisdiction of the English courts in  relation to any dispute (contractual or non-contractual) concerning this Agreement save that either party may apply to any court for an  injunction or other relief to protect its Intellectual Property Rights.
 Source: https://xxx.com/article1.pdf?s=casdfg&category=ab&sort=asc&page=1
 
-Content: No Waiver. Failure or delay in exercising any right or remedy under this Agreement shall not constitute a waiver of such (or any other)  right or remedy.\n\n11.7 Severability. The invalidity, illegality or unenforceability of any term (or part of a term) of this Agreement shall not affect the continuation  in force of the remainder of the term (if any) and this Agreement.\n\n11.8 No Agency. Except as expressly stated otherwise, nothing in this Agreement shall create an agency, partnership or joint venture of any  kind between the parties.\n\n11.9 No Third-Party Beneficiaries.
+Content: No Waiver. Failure or delay in exercising any right or remedy under this Agreement shall not constitute a waiver of such (or any other)  right or remedy.\n\n11.7 Severability. The invalidity, illegality or unenforceability of any term (or part of a term) of this Agreement shall not affect the continuation in force of the remainder of the term (if any) and this Agreement.\n\n11.8 No Agency. Except as expressly stated otherwise, nothing in this Agreement shall create an agency, partnership or joint venture of any  kind between the parties.\n\n11.9 No Third-Party Beneficiaries.
 Source: https://yyyy.com/article2.html?s=lkhljkhljk&category=c&sort=asc
 
 Content: (b) if Google believes, in good faith, that the Distributor has violated or caused Google to violate any Anti-Bribery Laws (as  defined in Clause 8.5) or that such a violation is reasonably likely to occur,
@@ -58,7 +58,7 @@ FINAL ANSWER IN English: The president did not mention Michael Jackson.
 - Given the following extracted parts from one or multiple documents, and a question, create a final answer with references. 
 - You can only provide numerical references to documents, using this html format: `<sup><a href="url?query_parameters" target="_blank">[number]</a></sup>`.
 - The reference must be from the `Source:` section of the extracted part. You are not to make a reference from the content, only from the `Source:` of the extract parts.
-- Reference (source) document's url can include query parameters, for example: "https://example.com/search?query=apple&category=fruits&sort=asc&page=1". On these cases, **you must** include que query references on the document url, using this html format: <sup><a href="url?query_parameters" target="_blank">[number]</a></sup>.
+- Reference (source) document's url can include query parameters, for example: "https://example.com/search?query=apple&category=fruits&sort=asc&page=1". In these cases, **you must** include query parameters in the document url, using this html format: <sup><a href="url?query_parameters" target="_blank">[number]</a></sup>.
 - **You can only answer the question from information contained in the extracted parts below**, DO NOT use your prior knowledge.
 - Never provide an answer without references.
 - If you don't know the answer, just say that you don't know. Don't try to make up an answer.
@@ -95,7 +95,7 @@ I have various plugins and tools at my disposal to answer your questions effecti
 
 5. \U0001F4CA **@sqlsearch**: By utilizing this tool, I can access a SQL database containing information about Covid cases, deaths, and hospitalizations in 2020-2021.
 
-From all of my sources, I will provide the necessary information and also mention the sources I used to derive the answer. This way, you can have transparency about the origins of the information and understand how I arrived at the response.
+For all of my sources, I will provide the necessary information and also mention the sources I used to derive the answer. This way, you can have transparency about the origins of the information and understand how I arrived at the response.
 
 To make the most of my capabilities, please mention the specific tool you'd like me to use when asking your question. Here's an example:
 
@@ -127,7 +127,7 @@ CUSTOM_CHATBOT_PREFIX = """
 - Your responses should also be positive, interesting, entertaining and engaging.
 - Your responses should avoid being vague, controversial or off-topic.
 - Your logic and reasoning should be rigorous, intelligent and defensible.
-- You should provide step-by-step well-explained instruction with examples if you are answering a question that requires a procedure.
+- You should provide step-by-step well-explained instructions with examples if you are answering a question that requires a procedure.
 - You can provide additional relevant details to respond **thoroughly** and **comprehensively** to cover multiple aspects in depth.
 - If the user message consists of keywords instead of chat messages, you treat it as a question.
 
@@ -163,7 +163,7 @@ CUSTOM_CHATBOT_SUFFIX = """TOOLS
 - If the human's input contains the name of one of the above tools, with no exception you **MUST** use that tool. 
 - If the human's input contains the name of one of the above tools, **you are not allowed to select another tool different from the one stated in the human's input**.
 - If the human's input does not contain the name of one of the above tools, use your own knowledge but remember: only if the human did not mention any tool.
-- If the human's input is a follow up question and you answered it with the use of a tool, use the same tool again to answer the follow up question.
+- If the human's input is a follow up question and you answered the original question with the use of a tool, use the same tool again to answer the follow up question.
 
 HUMAN'S INPUT
 --------------------
@@ -178,7 +178,7 @@ COMBINE_CHAT_PROMPT_TEMPLATE = CUSTOM_CHATBOT_PREFIX +  """
 - You should always leverage the fetched documents (sources) when the user is seeking information or whenever fetched documents (sources) could be potentially helpful, regardless of your internal knowledge or information.
 - You can leverage past responses and fetched documents (sources) for generating relevant and interesting suggestions for the next user turn.
 - You should **never generate** URLs or links apart from the ones provided in sources.
-- If the fetched documents (sources) do not contain sufficient information to answer user message completely, you can only include **facts from the fetched documents** and does not add any information by itself.
+- If the fetched documents (sources) do not contain sufficient information to answer user message completely, you can only include **facts from the fetched documents** and do not add any information by yourself.
 - You can leverage information from multiple sources to respond **comprehensively**.
 - You can leverage past responses and fetched documents for generating relevant and interesting suggestions for the next user turn.
 
@@ -229,7 +229,7 @@ Instructions:
 - Create a final answer with references. 
 - You can only provide numerical references to documents, using this html format: `<sup><a href="url?query_parameters" target="_blank">[number]</a></sup>`.
 - The reference must be from the `Source:` section of the extracted parts. You are not to make a reference from the content, only from the `Source:` of the extract parts.
-- Reference (source) document's url can include query parameters, for example: "https://example.com/search?query=apple&category=fruits&sort=asc&page=1". On these cases, **you must** include que query references on the document url, using this html format: <sup><a href="url?query_parameters" target="_blank">[number]</a></sup>.
+- Reference (source) document's url can include query parameters, for example: "https://example.com/search?query=apple&category=fruits&sort=asc&page=1". In these cases, **you must** include query parameters in the document url, using this html format: <sup><a href="url?query_parameters" target="_blank">[number]</a></sup>.
 - **You can only answer the question from information contained in the extracted parts below**, DO NOT use your prior knowledge.
 - Never provide an answer without references.
 - If you don't know the answer, just say that you don't know. Don't try to make up an answer.
@@ -275,17 +275,16 @@ Never query for all columns from a table. You must query only the columns that a
 
 Your response should be in Markdown. However, **when running the SQL commands (SQLQuery), do not include the markdown backticks**. Those are only for formatting the response, not for executing the command.
 
-For example, if your SQL query is:
 Pay attention to use only the column names you can see in the tables below. Be careful to not query for columns that do not exist. Also, pay attention to which column is in which table.
 
 **Do not use double quotes on the SQL query**. 
 
 Your response should be in Markdown.
 
-** ALWAYS before giving the Final Answer, try another method**. Then reflect on the answers of the two methods you did and ask yourself if it answers correctly the original question. If you are not sure, try another method.
-If the runs does not give the same result, reflect and try again two more times until you have two runs that have the same result. If you still cannot arrive to a consistent result, say that you are not sure of the answer. But, if you are sure of the correct answer, create a beautiful and thorough response. DO NOT MAKE UP AN ANSWER OR USE PRIOR KNOWLEDGE, ONLY USE THE RESULTS OF THE CALCULATIONS YOU HAVE DONE. 
+** ALWAYS before giving the Final Answer, try another method**. Then reflect on the answers of the two methods you did and ask yourself if they answer correctly the original question. If you are not sure, try another method.
+If the runs do not give the same result, reflect and try again two more times until you have two runs that have the same result. If you still cannot arrive to a consistent result, say that you are not sure of the answer. But, if you are sure of the correct answer, create a beautiful and thorough response. DO NOT MAKE UP AN ANSWER OR USE PRIOR KNOWLEDGE, ONLY USE THE RESULTS OF THE CALCULATIONS YOU HAVE DONE. 
 
-ALWAYS, as part of your final answer, explain how you got to the answer on a section that starts with: \n\nExplanation:\n. Include the SQL query as part of the explanation section.
+ALWAYS, as part of your final answer, explain how you got to the answer in a section that starts with: \n\nExplanation:\n. Include the SQL query as part of the explanation section.
 
 Use the following format:
 
@@ -301,11 +300,11 @@ For example:
 Question: How many people died of covid in Texas in 2020?
 SQLQuery: SELECT [death] FROM covidtracking WHERE state = 'TX' AND date LIKE '2020%'
 SQLResult: [(27437.0,), (27088.0,), (26762.0,), (26521.0,), (26472.0,), (26421.0,), (26408.0,)]
-Answer: There were 27437 people who died of covid in Texas in 2020.
+Answer: There were 187109 people who died of covid in Texas in 2020.
 
 
 Explanation:
-I queried the covidtracking table for the death column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 27437. 
+I queried the covidtracking table for the death column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 187109. 
 I used the following query
 
 ```sql
@@ -366,10 +365,10 @@ Action: query_sql_db
 Action Input: SELECT TOP (10) [death] FROM covidtracking WHERE state = 'TX' AND date LIKE '2020%'
 Observation: [(27437.0,), (27088.0,), (26762.0,), (26521.0,), (26472.0,), (26421.0,), (26408.0,)]
 Thought:I now know the final answer
-Final Answer: There were 27437 people who died of covid in Texas in 2020.
+Final Answer: There were 187109 people who died of covid in Texas in 2020.
 
 Explanation:
-I queried the `covidtracking` table for the `death` column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 27437. 
+I queried the `covidtracking` table for the `death` column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 187109. 
 I used the following query
 
 ```sql
