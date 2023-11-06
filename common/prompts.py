@@ -300,11 +300,11 @@ For example:
 Question: How many people died of covid in Texas in 2020?
 SQLQuery: SELECT [death] FROM covidtracking WHERE state = 'TX' AND date LIKE '2020%'
 SQLResult: [(27437.0,), (27088.0,), (26762.0,), (26521.0,), (26472.0,), (26421.0,), (26408.0,)]
-Answer: There were 187109 people who died of covid in Texas in 2020.
+Answer: There were 27437 people who died of covid in Texas in 2020.
 
 
 Explanation:
-I queried the covidtracking table for the death column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 187109. 
+I queried the covidtracking table for the death column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, 27437 is correct, because is the most recent result. It is not the addition of all the rows, just the last row. 
 I used the following query
 
 ```sql
@@ -365,10 +365,10 @@ Action: query_sql_db
 Action Input: SELECT TOP (10) [death] FROM covidtracking WHERE state = 'TX' AND date LIKE '2020%'
 Observation: [(27437.0,), (27088.0,), (26762.0,), (26521.0,), (26472.0,), (26421.0,), (26408.0,)]
 Thought:I now know the final answer
-Final Answer: There were 187109 people who died of covid in Texas in 2020.
+Final Answer: There were 27437 people who died of covid in Texas in 2020.
 
 Explanation:
-I queried the `covidtracking` table for the `death` column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, I took the sum of all the deaths in the list, which is 187109. 
+I queried the `covidtracking` table for the `death` column where the state is 'TX' and the date starts with '2020'. The query returned a list of tuples with the number of deaths for each day in 2020. To answer the question, 27437 is correct, because is the most recent result. It is not the addition of all the rows, just the last row. 
 I used the following query
 
 ```sql
