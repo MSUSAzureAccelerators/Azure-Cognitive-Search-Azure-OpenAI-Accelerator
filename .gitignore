@@ -8,5 +8,8 @@ common/__pycache__/
 .streamlit/
 *.amltmp 
 *.amltemp
+.venv/
+.vscode/
 data/
 credentials.env
+.mypy_cache/
