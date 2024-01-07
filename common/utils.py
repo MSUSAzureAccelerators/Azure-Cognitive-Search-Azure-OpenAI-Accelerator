@@ -354,20 +354,20 @@ def get_search_results(query: str, indexes: list,
             "queryType": "semantic",
             "semanticConfiguration": "my-semantic-config",
             "count": "true",
-            "speller": "lexicon",
-            "queryLanguage": "en-us",
+            # "speller": "lexicon",
+            # "queryLanguage": "en-us",
             "captions": "extractive",
             "answers": "extractive",
             "top": k
         }
         if vector_search:
-            search_payload["vectors"]= [{"value": query_vector, "fields": "chunkVector","k": k}]
+            search_payload["vectorQueries"]= [{"kind":"vector", "exhaustive":"true", "vector": query_vector, "fields": "chunkVector","k": k}]
             search_payload["select"]= "id, title, chunk, name, location"
         else:
             search_payload["select"]= "id, title, chunks, name, location, vectorized"
+            
         
-
-        resp = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + index + "/docs/search",
+        resp = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + index + "/docs/search.post.search",
                          data=json.dumps(search_payload), headers=headers, params=params)
 
         search_results = resp.json()
@@ -437,7 +437,7 @@ def update_vector_indexes(ordered_search_results: dict, embedder: AzureOpenAIEmb
                         ]
                     }
 
-                    r = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + value["index"]+"-vector" + "/docs/index",
+                    r = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + value["index"] + "-vector" + "/docs/search.index",
                                          data=json.dumps(upload_payload), headers=headers, params=params)
                     if r.status_code != 200:
                         print(r.status_code)
@@ -461,7 +461,7 @@ def update_vector_indexes(ordered_search_results: dict, embedder: AzureOpenAIEmb
             ]
         }
 
-        r = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + value["index"]+ "/docs/index",
+        r = requests.post(os.environ['AZURE_SEARCH_ENDPOINT'] + "/indexes/" + value["index"] + "-vector" + "/docs/search.index",
                          data=json.dumps(upload_payload), headers=headers, params=params)
 
 
