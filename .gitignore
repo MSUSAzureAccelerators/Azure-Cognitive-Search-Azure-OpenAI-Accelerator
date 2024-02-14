@@ -13,3 +13,5 @@ credentials.env
 .azure/
 .vscode/
 infra/target/
+apps/frontend/frontend.zip
+apps/backend/backend.zip
