@@ -178,7 +178,7 @@ class MyBot(ActivityHandler):
 
         await turn_context.send_activity(Activity(type=ActivityTypes.typing))
         
-        answer = brain_agent_executor.invoke({"question": input_text}, config=config)["output"]
+        answer = (await brain_agent_executor.ainvoke({"question": input_text}, config=config))["output"]
         
         await turn_context.send_activity(answer)
 
